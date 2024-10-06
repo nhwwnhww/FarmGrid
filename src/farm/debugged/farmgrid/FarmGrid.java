@@ -1,6 +1,7 @@
-package farm.core.farmgrid;
+package farm.debugged.farmgrid;
 
 import farm.core.UnableToInteractException;
+import farm.core.farmgrid.Grid;
 import farm.inventory.product.*;
 import farm.inventory.product.data.Quality;
 import farm.inventory.product.data.RandomQuality;
@@ -10,7 +11,7 @@ import java.util.List;
 
 
 
-public class FarmGrid implements Grid{
+public class FarmGrid implements Grid {
 
     public List<List<String>> farmState;
     public int rows;
@@ -82,7 +83,7 @@ public class FarmGrid implements Grid{
 
         int positionIndex = (row * this.columns) + (column);
 
-            // Correct the Row and Column Bounds Check
+        // Correct the Row and Column Bounds Check
         if (row < 0 || column < 0 || row >= this.rows || column >= this.columns) {
             return false;
         }
@@ -237,7 +238,7 @@ public class FarmGrid implements Grid{
 
         // if the position contains an animal
         if ((positionInfo.get(0).equals("cow") || positionInfo.get(0).equals("chicken")
-        || positionInfo.get(0).equals("sheep")) && this.farmType.equals("animal")) {
+                || positionInfo.get(0).equals("sheep")) && this.farmType.equals("animal")) {
             // check fed and collected status of animal
             if (positionInfo.get(2).equals("Fed: false")) {
                 throw new UnableToInteractException("You have not fed this animal today!");
@@ -250,61 +251,56 @@ public class FarmGrid implements Grid{
                 Quality quality = randomQuality.getRandomQuality();
 
                 //return product and set collected to true
-                switch (positionInfo.get(0)) {
-                    case "cow" -> {
-                        positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
-                        farmState.set(positionIndex, positionInfo);
-//                    return new Egg(quality);
-                        return new Milk(quality);
-                    }
-                    case "chicken" -> {
-                        positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
-                        farmState.set(positionIndex, positionInfo);
-                        return new Egg(quality);
-                    }
-                    case "sheep" -> {
-                        positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
-                        farmState.set(positionIndex, positionInfo);
-                        return new Wool(quality);
-                    }
+                if (positionInfo.get(0).equals("cow")) {
+                    positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Egg(quality);
+
+                } else if (positionInfo.get(0).equals("chicken")) {
+                    positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Egg(quality);
+
+                } else if (positionInfo.get(0).equals("sheep")) {
+                    positionInfo = List.of(positionInfo.get(0), positionInfo.get(1), positionInfo.get(2), "Collected: true");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Wool(quality);
                 }
             } else {
                 throw new UnableToInteractException("You have an animal on a plant farm!");
             }
         } else if ((positionInfo.get(0).equals("wheat") ||
-        positionInfo.get(0).equals("berry") || positionInfo.get(0).equals("coffee")) && this.farmType.equals("plant")) {
+                positionInfo.get(0).equals("berry") || positionInfo.get(0).equals("coffee")) && this.farmType.equals("plant")) {
             // get a random quality
-           Quality quality = randomQuality.getRandomQuality();
+            Quality quality = randomQuality.getRandomQuality();
 
 
             // check stage
-            switch (positionInfo.get(0)) {
-                case "wheat" -> {
-                    if (positionInfo.get(1).equals("#")) {
-                        positionInfo = List.of(positionInfo.getFirst(), "\u1F34", "Stage: 0");
-                        farmState.set(positionIndex, positionInfo);
-                        return new Bread(quality);
-                    } else {
-                        throw new UnableToInteractException("The crop is not fully grown!");
-                    }
+            if (positionInfo.get(0).equals("wheat")) {
+                if (positionInfo.get(1).equals("#")) {
+                    positionInfo = List.of(positionInfo.get(0), "\u1F34", "Stage: 0");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Bread(quality);
+                } else {
+                    throw new UnableToInteractException("The crop is not fully grown!");
                 }
-                case "coffee" -> {
-                    if (positionInfo.get(1).equals("%")) {
-                        positionInfo = List.of(positionInfo.getFirst(), ":", "Stage: 0");
-                        farmState.set(positionIndex, positionInfo);
-                        return new Coffee(quality);
-                    } else {
-                        throw new UnableToInteractException("The crop is not fully grown!");
-                    }
+
+            } else if (positionInfo.get(0).equals("coffee")) {
+                if (positionInfo.get(1).equals("%")) {
+                    positionInfo = List.of(positionInfo.get(0), ":", "Stage: 0");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Coffee(quality);
+                } else {
+                    throw new UnableToInteractException("The crop is not fully grown!");
                 }
-                case "berry" -> {
-                    if (positionInfo.get(1).equals("@")) {
-                        positionInfo = List.of(positionInfo.getFirst(), ".", "Stage: 0");
-                        farmState.set(positionIndex, positionInfo);
-                        return new Jam(quality);
-                    } else {
-                        throw new UnableToInteractException("The crop is not fully grown!");
-                    }
+
+            } else if (positionInfo.get(0).equals("berry")) {
+                if (positionInfo.get(1).equals("@")) {
+                    positionInfo = List.of(positionInfo.get(0), ".", "Stage: 0");
+                    farmState.set(positionIndex, positionInfo);
+                    return new Jam(quality);
+                } else {
+                    throw new UnableToInteractException("The crop is not fully grown!");
                 }
             }
         } else {
@@ -384,44 +380,45 @@ public class FarmGrid implements Grid{
         for (List<String> itemInfo : farmState) {
             if (this.farmType.equals("plant")) {
                 // if the plant is not at a final stage, increment stage and symbol
-              if (plantsThatCanGrow.contains(itemInfo.get(1))) {
+                if (plantsThatCanGrow.contains(itemInfo.get(1))) {
                     // berries
-                  switch (itemInfo.get(1)) {
-                      case "." -> {
-                          if (itemInfo.get(2).equals("Stage: 0")) {
-                              farmState.set(i, List.of("berry", ".", "Stage: 1"));
-                          } else if (itemInfo.get(2).equals("Stage: 1")) {
-                              farmState.set(i, List.of("berry", "o", "Stage: 2"));
-                          }
-                      }
-                      case "o" -> farmState.set(i, List.of("berry", "@", "Stage: 3"));
-                      case "\u1F34" -> {
-                          // wheat
-                          if (itemInfo.get(2).equals("Stage: 0")) {
-                              farmState.set(i, List.of("wheat", "\u1F34", "Stage: 1"));
-                          } else {
-                              farmState.set(i, List.of("wheat", "#", "Stage: 2"));
-                          }
-                      }
-                      case ":" -> {
-                          // coffees
-                          if (itemInfo.get(2).equals("Stage: 0")) {
-                              farmState.set(i, List.of("coffee", ":", "Stage: 1"));
-                          } else if (itemInfo.get(2).equals("Stage: 1")) {
-                              farmState.set(i, List.of("coffee", ";", "Stage: 2"));
-                          }
-                      }
-                      case ";" -> farmState.set(i, List.of("coffee", "*", "Stage: 3"));
-                      case "*" -> farmState.set(i, List.of("coffee", "%", "Stage: 4"));
-                  }
+                    if (itemInfo.get(1).equals(".")) {
+                        if (itemInfo.get(2).equals("Stage: 0")) {
+                            farmState.set(i, List.of("berry", ".", "Stage: 1"));
+                        } else if (itemInfo.get(2).equals("Stage: 1")) {
+                            farmState.set(i, List.of("berry", "o", "Stage: 2"));
+                        }
+                    } else if (itemInfo.get(1).equals("o")) {
+                        farmState.set(i, List.of("berry", "@", "Stage: 3"));
+
+                    } else if (itemInfo.get(1).equals("\u1F34")) {
+                        // wheat
+                        if (itemInfo.get(2).equals("Stage: 0")) {
+                            farmState.set(i, List.of("wheat", "\u1F34", "Stage: 1"));
+                        } else {
+                            farmState.set(i, List.of("wheat", "#", "Stage: 2"));
+                        }
+
+                    } else if (itemInfo.get(1).equals(":")) {
+                        // coffees
+                        if (itemInfo.get(2).equals("Stage: 0")) {
+                            farmState.set(i, List.of("coffee", ":", "Stage: 1"));
+                        } else if (itemInfo.get(2).equals("Stage: 1")) {
+                            farmState.set(i, List.of("coffee", ";", "Stage: 2"));
+                        }
+                    } else if (itemInfo.get(1).equals(";")) {
+                        farmState.set(i, List.of("coffee", "*", "Stage: 3"));
+                    } else if (itemInfo.get(1).equals("*")) {
+                        farmState.set(i, List.of("coffee", "%", "Stage: 4"));
+                    }
                 }
             } else if (this.farmType.equals("animal")) {
                 // if animal, reset fed and collected to false
 //                if (!animalSymbols.contains(itemInfo.get(1))) {
                 if (animalSymbols.contains(itemInfo.get(1))) {
-                        String symbol = itemInfo.get(1);
-                        String name = itemInfo.get(0);
-                        farmState.set(i, List.of(name, symbol, "Fed: false", "Collected: false"));
+                    String symbol = itemInfo.get(1);
+                    String name = itemInfo.get(0);
+                    farmState.set(i, List.of(name, symbol, "Fed: false", "Collected: false"));
                 }
             }
 
