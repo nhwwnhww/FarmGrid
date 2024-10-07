@@ -37,7 +37,7 @@ public class FarmGrid implements Grid {
         this.columns = columns;
 
 
-        farmState = new ArrayList<List<String>>();
+        farmState = new ArrayList<>();
 
 //        randomQuality = null;
         randomQuality = new RandomQuality();
@@ -62,7 +62,6 @@ public class FarmGrid implements Grid {
 
     /**
      * Default constructor for the FarmGrid, creating a plant farm.
-     *
      * NOTE: whatever class you implement that extends Grid *must* have a constructor
      * with this signature for testing purposes.
      *
@@ -219,10 +218,6 @@ public class FarmGrid implements Grid {
             throw new UnableToInteractException("You can't harvest this location");
         }
 
-//        if (column <= -1) {
-//            throw new UnableToInteractException("You can't harvest this location");
-//        }
-
         List<String> positionInfo;
         try {
             positionInfo = farmState.get(positionIndex);
@@ -337,13 +332,6 @@ public class FarmGrid implements Grid {
      * @return true iff the animal was fed, else false.
      */
     public boolean feed(int row, int col) {
-
-//       if (row > this.rows - 1 || row <= -1) {
-//            return false;
-//        }
-//        if (col > this.columns - 1 || col <= -1) {
-//            return false;
-//        }
 
         if (row < 0 || col < 0 || row >= this.rows || col >= this.columns) {
             return false;

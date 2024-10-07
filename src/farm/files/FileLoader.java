@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The {@code FileLoader} class is responsible for loading farm data from a file and populating a {@link Grid} object.
+ * It reads the dimensions of the grid, followed by the contents of each cell, and restores the farm state.
+ */
 public class FileLoader {
     private String farmType;
 
@@ -23,7 +27,6 @@ public class FileLoader {
      * Loads contents of the specified file into a Grid.
      * @param filename the String filename to read contents from.
      * @return a grid instance.
-     * @throws IOException
      */
     public Grid load(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -44,7 +47,7 @@ public class FileLoader {
             }
 
             // Set the grid's state
-            grid.farmState = gridState;
+            grid.setFarmState(gridState);
             return grid;
         } catch (IOException e) {
             System.err.println("Error while loading grid from file: " + e.getMessage());
