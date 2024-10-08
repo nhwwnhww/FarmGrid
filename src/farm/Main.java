@@ -8,8 +8,6 @@ import farm.customer.AddressBook;
 import farm.customer.Customer;
 import farm.inventory.FancyInventory;
 import farm.inventory.Inventory;
-import farm.inventory.product.data.Barcode;
-import farm.inventory.product.data.Quality;
 
 import java.util.List;
 
@@ -35,12 +33,12 @@ public class Main {
 
         Inventory inventory = new FancyInventory();
         // these lines populate the inventory with extra things if you would like to
-        for (Barcode barcode : List.of(Barcode.MILK, Barcode.EGG, Barcode.WOOL, Barcode.EGG)) {
-            for (Quality quality : List.of(Quality.REGULAR, Quality.SILVER, Quality.REGULAR,
-                    Quality.GOLD, Quality.REGULAR, Quality.REGULAR, Quality.IRIDIUM)) {
-                inventory.addProduct(barcode, quality);
-            }
-        }
+//        for (Barcode barcode : List.of(Barcode.MILK, Barcode.EGG, Barcode.WOOL, Barcode.EGG)) {
+//            for (Quality quality : List.of(Quality.REGULAR, Quality.SILVER, Quality.REGULAR,
+//                    Quality.GOLD, Quality.REGULAR, Quality.REGULAR, Quality.IRIDIUM)) {
+//                inventory.addProduct(barcode, quality);
+//            }
+//        }
 
         // these lines are what runs the actual program
         FarmManager manager = new FarmManager(new Farm(inventory, addressBook),

@@ -10,10 +10,10 @@ import java.util.*;
  */
 public class ShopFront {
     public static final String CAT = """
-                  â•±|ã€
-                (ËšËŽ ã€‚7
-                 |ã€Ëœã€µ
-                 ã˜ã—Ë,)ãƒŽ
+                  ╱|、
+                (˚ˎ 。7
+                 |、˜〵
+                 じしˍ,)ノ
                 """;
 
     public static final String BARN = """

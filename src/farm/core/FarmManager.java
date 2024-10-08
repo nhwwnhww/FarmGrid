@@ -27,14 +27,6 @@ public class FarmManager {
     private Grid grid;
 
 
-//    // note: farmType is perhaps not the most elegant design choice,
-//    // but has been included here to give you more flexibility.
-//    // Feel free to modify FarmManager if you wish, as long as run()
-//    // instantiates/loads/saves the grid with the same commands, and
-//    // getCurrentGrid() allows us to retrieve the grid for testing.
-//    private String farmType;
-
-
     /**
      * Create a new FarmManager instance with a farm and shop provided.
      * @param farm the model for the program.
@@ -692,4 +684,3 @@ public class FarmManager {
         };
     }
 }
-

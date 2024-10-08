@@ -32,6 +32,10 @@ public class FileLoader {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             // Read grid dimensions
             String[] dimensions = reader.readLine().split(",");
+            if (dimensions.length != 2) {
+                throw new IOException("Invalid grid dimensions in file");
+            }
+
             int rows = Integer.parseInt(dimensions[0]);
             int columns = Integer.parseInt(dimensions[1]);
 
@@ -43,15 +47,18 @@ public class FileLoader {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> cell = Arrays.asList(line.split(","));
+                if (cell.size() != 2 && cell.size() != 4) {
+                    throw new IOException("Invalid cell data in file");
+                }
                 gridState.add(cell);
             }
 
             // Set the grid's state
-            grid.setFarmState(gridState);
+            grid.setFarmStateFromFile(gridState);
             return grid;
         } catch (IOException e) {
             System.err.println("Error while loading grid from file: " + e.getMessage());
-            return null;
+            throw e;  // Rethrow the exception to let the caller handle it
         }
     }
 }

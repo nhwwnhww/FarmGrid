@@ -38,6 +38,8 @@ public interface Grid {
      */
     Product harvest(int row, int column) throws UnableToInteractException;
 
+    void remove(int row, int column);
+
     /**
      * Generates the grid display of the farm as a String.
      */
