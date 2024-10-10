@@ -95,7 +95,10 @@ public class FarmGrid implements Grid {
 
         int positionIndex = (row * this.columns) + (column);
 
-        if (row < 0 || column < 0 || row >= this.rows || column >= this.columns) {
+        if (row < 0
+                || column < 0
+                || row >= this.rows
+                || column >= this.columns) {
             return false;
         }
 

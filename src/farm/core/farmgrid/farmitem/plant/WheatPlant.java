@@ -11,19 +11,22 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class WheatPlant extends Plant {
 
+    private final RandomQuality randomQuality;
+
     /**
      * Constructor for WheatPlant, initializing the plant with default symbol and growth stages.
      */
     public WheatPlant(RandomQuality randomQuality) {
         super(randomQuality);
-        this.symbol = 'ἴ';
-        this.growthStage = 1;
-        this.maxGrowthStage = 2;
+        setSymbol('ἴ');
+        this.setGrowthStage(1);
+        this.setMaxGrowthStage(2);
+        this.randomQuality = randomQuality;
     }
 
     @Override
     public char getSymbol() {
-        return switch (growthStage) {
+        return switch (this.getGrowthStage()) {
             case 1 -> 'ἴ';
             case 2 -> '#';
             default -> 'ἴ';
@@ -31,17 +34,10 @@ public class WheatPlant extends Plant {
     }
 
     @Override
-    public void grow() {
-        if (growthStage < maxGrowthStage) {
-            growthStage++;
-        }
-    }
-
-    @Override
     public Product harvest() throws UnableToInteractException {
-        if (growthStage >= maxGrowthStage) {
-            Quality quality = new RandomQuality().getRandomQuality();
-            growthStage = 1;
+        if (this.getGrowthStage() >= this.getMaxGrowthStage()) {
+            Quality quality = randomQuality.getRandomQuality();
+            this.setGrowthStage(0);
             return new Bread(quality);
         } else {
             throw new UnableToInteractException("The crop is not fully grown!");

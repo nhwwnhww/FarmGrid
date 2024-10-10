@@ -8,8 +8,8 @@ import farm.inventory.product.data.RandomQuality;
  * Abstract class representing a plant in the farm, which is inherited from FarmItem.
  */
 public abstract class Plant extends FarmItem {
-    public int growthStage;
-    public int maxGrowthStage;
+    private int growthStage;
+    private int maxGrowthStage;
 
     /**
      * Constructor for FarmItem, initializing the random quality of the item.
@@ -21,10 +21,44 @@ public abstract class Plant extends FarmItem {
     }
 
     /**
+     * Returns the current growth stage of the plant.
+     * @return growthStage
+     */
+    public int getGrowthStage() {
+        return growthStage;
+    }
+
+    /**
+     * Sets the current growth stage of the plant.
+     */
+    public void setGrowthStage(int growthStage) {
+        this.growthStage = growthStage;
+    }
+
+    /**
+     * Returns the maximum growth stage that the plant can reach.
+     * @return maxGrowthStage
+     */
+    public int getMaxGrowthStage() {
+        return maxGrowthStage;
+    }
+
+    /**
+     * Sets the maximum growth stage for the plant.
+     */
+    public void setMaxGrowthStage(int maxGrowthStage) {
+        this.maxGrowthStage = maxGrowthStage;
+    }
+
+    /**
      * Abstract method that represents the plant's growth.
      * The subclasses must provide the implementation of how the plant grows.
      */
-    public abstract void grow();
+    public void grow() {
+        if (this.getGrowthStage() < this.getMaxGrowthStage()) {
+            this.setGrowthStage(this.getGrowthStage() + 1);
+        }
+    }
 
     @Override
     public void endDay() {
@@ -35,4 +69,5 @@ public abstract class Plant extends FarmItem {
     public void interact(String command) throws UnableToInteractException {
         throw new UnableToInteractException("Unknown command: " + command);
     }
+
 }

@@ -11,19 +11,22 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class CoffeePlant extends Plant {
 
+    private final RandomQuality randomQuality;
+
     /**
      * Constructor for CoffeePlant, initializing the plant with default symbol and growth stages.
      */
     public CoffeePlant(RandomQuality randomQuality) {
         super(randomQuality);
-        this.symbol = ':';
-        this.growthStage = 1;
-        this.maxGrowthStage = 4;
+        setSymbol(':');
+        this.setGrowthStage(1);
+        this.setMaxGrowthStage(4);
+        this.randomQuality = randomQuality;
     }
 
     @Override
     public char getSymbol() {
-        return switch (growthStage) {
+        return switch (this.getGrowthStage()) {
             case 1 -> ':';
             case 2 -> ';';
             case 3 -> '*';
@@ -33,17 +36,10 @@ public class CoffeePlant extends Plant {
     }
 
     @Override
-    public void grow() {
-        if (growthStage < maxGrowthStage) {
-            growthStage++;
-        }
-    }
-
-    @Override
     public Product harvest() throws UnableToInteractException {
-        if (growthStage >= maxGrowthStage) {
-            Quality quality = new RandomQuality().getRandomQuality();
-            growthStage = 1;
+        if (this.getGrowthStage() >= this.getMaxGrowthStage()) {
+            Quality quality = randomQuality.getRandomQuality();
+            this.setGrowthStage(0);
             return new Coffee(quality);
         } else {
             throw new UnableToInteractException("The crop is not fully grown!");

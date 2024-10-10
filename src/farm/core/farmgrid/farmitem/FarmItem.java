@@ -9,8 +9,12 @@ import farm.inventory.product.data.RandomQuality;
  * by specific items such as plants or animals.
  */
 public abstract class FarmItem {
-    protected char symbol;
-    protected RandomQuality randomQuality;
+
+    /**
+     * Sets the symbol representing the farm item.
+     */
+    public void setSymbol(char symbol) {
+    }
 
     /**
      * Constructor for FarmItem, initializing the random quality of the item.
@@ -18,7 +22,6 @@ public abstract class FarmItem {
      * @param randomQuality - The RandomQuality object representing the quality of the farm item.
      */
     public FarmItem(RandomQuality randomQuality) {
-        this.randomQuality = randomQuality;
     }
 
     /**

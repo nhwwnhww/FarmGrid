@@ -8,8 +8,8 @@ import farm.inventory.product.data.RandomQuality;
  * Abstract class representing an animal on the farm, which is inherited from FarmItem.
  */
 public abstract class Animal extends FarmItem {
-    public boolean isFed;
-    public boolean hasProduced;
+    private boolean isFed;
+    private boolean hasProduced;
 
     /**
      * Constructor for FarmItem, initializing the random quality of the item.
@@ -25,6 +25,36 @@ public abstract class Animal extends FarmItem {
      */
     public void feed() {
         isFed = true;
+    }
+
+    /**
+     * Returns whether the animal has been fed.
+     * @return isFed
+     */
+    public boolean isFed() {
+        return isFed;
+    }
+
+    /**
+     * Sets the fed status of the animal.
+     */
+    public void setFed(boolean isFed) {
+        this.isFed = isFed;
+    }
+
+    /**
+     * Returns whether the animal has produced a product today.
+     * @return hasProduced
+     */
+    public boolean hasProduced() {
+        return hasProduced;
+    }
+
+    /**
+     * Sets the produced status of the animal.
+     */
+    public void setProduced(boolean hasProduced) {
+        this.hasProduced = hasProduced;
     }
 
     @Override

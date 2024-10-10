@@ -1,8 +1,7 @@
 package farm.core.farmgrid;
 
 import farm.core.UnableToInteractException;
-import farm.core.farmgrid.farmitem.Cell;
-import farm.core.farmgrid.farmitem.FarmItem;
+import farm.core.farmgrid.farmitem.*;
 import farm.core.farmgrid.farmitem.animal.Animal;
 import farm.core.farmgrid.farmitem.animal.Chicken;
 import farm.core.farmgrid.farmitem.animal.Cow;
@@ -18,16 +17,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 重构后的 FarmGrid 类，实现了 Grid 接口。
+ * The FarmGrid class represents a grid-based farm system where various plants and animals can be placed,
+ * interacted with, and harvested. The class supports operations like placing items, removing them,
+ * and interacting with the farm through commands.
  */
 public class FarmGrid implements Grid {
 
-    private Cell[][] grid;
+    private final Cell[][] grid;
     private final int rows;
     private final int columns;
     private final String farmType;
     private final RandomQuality randomQuality;
 
+    /**
+     * Constructor for FarmGrid with specified rows, columns, and farm type.
+     *
+     * @param rows     - The number of rows in the grid.
+     * @param columns  - The number of columns in the grid.
+     * @param farmType - The type of the farm (either "plant" or "animal").
+     */
     public FarmGrid(int rows, int columns, String farmType) {
         this.rows = rows;
         this.columns = columns;
@@ -37,6 +45,12 @@ public class FarmGrid implements Grid {
         initializeFarm();
     }
 
+    /**
+     * Overloaded constructor for FarmGrid, assuming a default farm type of "plant".
+     *
+     * @param rows    - The number of rows in the grid.
+     * @param columns - The number of columns in the grid.
+     */
     public FarmGrid(int rows, int columns) {
         this(rows, columns, "plant");
     }
@@ -47,6 +61,16 @@ public class FarmGrid implements Grid {
                 grid[i][j] = new Cell();
             }
         }
+    }
+
+    /**
+     * Retrieves the type of the farm (either plant or animal).
+     *
+     * @return A {@code String} representing the type of the farm.
+     *         It will return "plant" for a plant farm or "animal" for an animal farm.
+     */
+    public String getFarmType() {
+        return this.farmType;
     }
 
     @Override
@@ -104,7 +128,9 @@ public class FarmGrid implements Grid {
         return columns;
     }
 
-    @Override
+    /**
+     * Removes the FarmItem at the specified row and column from the grid.
+     */
     public void remove(int row, int column) {
         if (!isValidPosition(row, column)) {
             return;
@@ -143,10 +169,10 @@ public class FarmGrid implements Grid {
                     cellInfo.add(getItemName(item));
                     cellInfo.add(String.valueOf(item.getSymbol()));
                     if (item instanceof Plant) {
-                        cellInfo.add("Stage: " + ((Plant) item).growthStage);
+                        cellInfo.add("Stage: " + ((Plant) item).getGrowthStage());
                     } else if (item instanceof Animal) {
-                        cellInfo.add("Fed: " + ((Animal) item).isFed);
-                        cellInfo.add("Collected: " + ((Animal) item).hasProduced);
+                        cellInfo.add("Fed: " + (((Animal) item).isFed()));
+                        cellInfo.add("Collected: " + ((Animal) item).hasProduced());
                     }
                 }
                 stats.add(cellInfo);
@@ -212,6 +238,9 @@ public class FarmGrid implements Grid {
         return true;
     }
 
+    /**
+     * Advances the farm to the next day.
+     */
     public void endDay() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -223,10 +252,9 @@ public class FarmGrid implements Grid {
         }
     }
 
-    public String getFarmType() {
-        return farmType;
-    }
-
+    /**
+     * Sets the state of the farm based on the provided farm state data.
+     */
     public void setFarmStateFromFile(List<List<String>> farmState) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -237,10 +265,13 @@ public class FarmGrid implements Grid {
                     if (item != null) {
                         cell.placeItem(item);
                         if (item instanceof Plant) {
-                            ((Plant) item).growthStage = Integer.parseInt(cellData.get(2).split(": ")[1]);
+                            ((Plant) item).setGrowthStage(Integer.parseInt(cellData.get(2)
+                                    .split(": ")[1]));
                         } else if (item instanceof Animal) {
-                            ((Animal) item).isFed = Boolean.parseBoolean(cellData.get(2).split(": ")[1]);
-                            ((Animal) item).hasProduced = Boolean.parseBoolean(cellData.get(3).split(": ")[1]);
+                            ((Animal) item).setFed(Boolean
+                                    .parseBoolean(cellData.get(2).split(": ")[1]));
+                            ((Animal) item).setProduced(Boolean.parseBoolean(cellData.get(3)
+                                    .split(": ")[1]));
                         }
                     }
                 }

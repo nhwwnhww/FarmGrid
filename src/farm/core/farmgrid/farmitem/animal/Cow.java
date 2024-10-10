@@ -11,15 +11,20 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class Cow extends Animal {
 
+    private final RandomQuality randomQuality;
+    private final char symbol;
+
     /**
      * Constructor for Cow, initializing the cow with the default symbol ('४')
      * and resetting the fed and produced states.
      */
     public Cow(RandomQuality randomQuality) {
         super(randomQuality);
+        setSymbol('४');
+        this.setFed(false);
+        this.setProduced(false);
+        this.randomQuality = randomQuality;
         this.symbol = '४';
-        this.isFed = false;
-        this.hasProduced = false;
     }
 
     @Override
@@ -29,14 +34,14 @@ public class Cow extends Animal {
 
     @Override
     public Product harvest() throws UnableToInteractException {
-        if (!isFed) {
+        if (!isFed()) {
             throw new UnableToInteractException("You have not fed this animal today!");
         }
-        if (hasProduced) {
+        if (hasProduced()) {
             throw new UnableToInteractException("This animal has produced an item already today!");
         }
-        hasProduced = true;
-        Quality quality = new RandomQuality().getRandomQuality();
+        this.setProduced(true);
+        Quality quality = randomQuality.getRandomQuality();
         return new Milk(quality);
     }
 }
