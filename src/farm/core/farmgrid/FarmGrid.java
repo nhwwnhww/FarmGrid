@@ -63,16 +63,6 @@ public class FarmGrid implements Grid {
         }
     }
 
-    /**
-     * Retrieves the type of the farm (either plant or animal).
-     *
-     * @return A {@code String} representing the type of the farm.
-     *         It will return "plant" for a plant farm or "animal" for an animal farm.
-     */
-    public String getFarmType() {
-        return this.farmType;
-    }
-
     @Override
     public boolean place(int row, int column, char symbol) {
 

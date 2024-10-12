@@ -19,7 +19,7 @@ public class BerryPlant extends Plant {
      */
     public BerryPlant(RandomQuality randomQuality) {
         super(randomQuality);
-        setSymbol('.');
+        this.setSymbol('.');
         this.setGrowthStage(1);
         this.setMaxGrowthStage(3);
         this.randomQuality = randomQuality;

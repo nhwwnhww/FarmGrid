@@ -11,25 +11,15 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class Sheep extends Animal {
 
-    private final RandomQuality randomQuality;
-    private final char symbol;
-
     /**
      * Constructor for Sheep, initializing the sheep with the default symbol ('ඔ')
      * and resetting the fed and produced states.
      */
     public Sheep(RandomQuality randomQuality) {
         super(randomQuality);
-        setSymbol('ඔ');
         this.setFed(false);
         this.setProduced(false);
-        this.randomQuality = randomQuality;
-        this.symbol = 'ඔ';
-    }
-
-    @Override
-    public char getSymbol() {
-        return symbol;
+        this.setSymbol('ඔ');
     }
 
     @Override
@@ -41,7 +31,7 @@ public class Sheep extends Animal {
             throw new UnableToInteractException("This animal has produced an item already today!");
         }
         this.setProduced(true);
-        Quality quality = randomQuality.getRandomQuality();
+        Quality quality = this.getRandomQuality().getRandomQuality();
         return new Wool(quality);
     }
 }

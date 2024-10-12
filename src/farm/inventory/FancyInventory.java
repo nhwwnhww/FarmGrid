@@ -12,7 +12,6 @@ import java.util.*;
  * A fancy inventory which stores products in stacks, enabling quantity information.
  * <p>
  * Introduces the concept of performing operations on multiple Products, such as removing 4 Eggs.
- * @stage3
  */
 public class FancyInventory implements Inventory {
     private final Map<Barcode, List<Product>> stockedProducts = new HashMap<>();
@@ -93,7 +92,6 @@ public class FancyInventory implements Inventory {
      * <br>
      * That is, if there is 1 Wool, 1 Egg, and 2 Milk in the inventory, the returned list will be organised into 1 Egg, 2 Milk, 1 Wool. i.e {@code getAllProducts() == [Egg(), Milk(), Milk(), Wool()]}
      *
-     * @hint See {@link Barcode#values()} about the order
      * @return An organised list containing all products currently stored in the inventory.
      */
     @Override

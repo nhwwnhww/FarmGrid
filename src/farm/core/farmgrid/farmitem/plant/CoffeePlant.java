@@ -18,7 +18,7 @@ public class CoffeePlant extends Plant {
      */
     public CoffeePlant(RandomQuality randomQuality) {
         super(randomQuality);
-        setSymbol(':');
+        this.setSymbol(':');
         this.setGrowthStage(1);
         this.setMaxGrowthStage(4);
         this.randomQuality = randomQuality;

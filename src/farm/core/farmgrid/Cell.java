@@ -1,4 +1,6 @@
-package farm.core.farmgrid.farmitem;
+package farm.core.farmgrid;
+
+import farm.core.farmgrid.farmitem.FarmItem;
 
 /**
  * Class representing a Cell on the farm grid, which can hold a FarmItem.

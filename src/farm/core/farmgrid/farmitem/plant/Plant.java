@@ -7,9 +7,11 @@ import farm.inventory.product.data.RandomQuality;
 /**
  * Abstract class representing a plant in the farm, which is inherited from FarmItem.
  */
-public abstract class Plant extends FarmItem {
+public abstract class Plant implements FarmItem {
+    private final RandomQuality randomQuality;
     private int growthStage;
     private int maxGrowthStage;
+    private char symbol;
 
     /**
      * Constructor for FarmItem, initializing the random quality of the item.
@@ -17,7 +19,17 @@ public abstract class Plant extends FarmItem {
      * @param randomQuality - The RandomQuality object representing the quality of the farm item.
      */
     public Plant(RandomQuality randomQuality) {
-        super(randomQuality);
+        this.randomQuality = randomQuality;
+    }
+
+    @Override
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
+    }
+
+    @Override
+    public char getSymbol() {
+        return symbol;
     }
 
     /**

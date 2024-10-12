@@ -2,54 +2,35 @@ package farm.core.farmgrid.farmitem;
 
 import farm.core.UnableToInteractException;
 import farm.inventory.product.Product;
-import farm.inventory.product.data.RandomQuality;
 
 /**
- * Abstract class representing a generic item in the farm, which can be extended
- * by specific items such as plants or animals.
+ * Interface representing a generic item in the farm.
  */
-public abstract class FarmItem {
+public interface FarmItem {
 
     /**
      * Sets the symbol representing the farm item.
      */
-    public void setSymbol(char symbol) {
-    }
+    void setSymbol(char symbol);
 
     /**
-     * Constructor for FarmItem, initializing the random quality of the item.
-     *
-     * @param randomQuality - The RandomQuality object representing the quality of the farm item.
+     * Returns the symbol representing the farm item.
      */
-    public FarmItem(RandomQuality randomQuality) {
-    }
+    char getSymbol();
 
     /**
-     * Abstract method to return the symbol representing the farm item.
-     *
-     * @return the character symbol representing the farm item.
+     * Harvests the farm item, producing a product.
      */
-    public abstract char getSymbol();
+    Product harvest() throws UnableToInteractException;
 
     /**
-     * Abstract method for harvesting the farm item, producing a Product.
-     *
-     * @return a Product based on the farm item's state and quality.
-     * @throws UnableToInteractException if the item cannot be harvested at the current time.
+     * Interacts with the farm item based on a command.
      */
-    public abstract Product harvest() throws UnableToInteractException;
+    void interact(String command) throws UnableToInteractException;
 
     /**
-     * Abstract method for interacting with the farm item via a command.
-     *
-     * @param command - A string representing the interaction command.
-     * @throws UnableToInteractException if the command is not recognized or not supported.
+     * Performs necessary actions at the end of the day.
      */
-    public abstract void interact(String command) throws UnableToInteractException;
+    void endDay();
 
-    /**
-     * Abstract method called at the end of the day, allowing the farm item to perform
-     * any necessary state updates or actions.
-     */
-    public abstract void endDay();
 }

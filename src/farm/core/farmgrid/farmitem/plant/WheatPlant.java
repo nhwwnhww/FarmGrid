@@ -18,7 +18,7 @@ public class WheatPlant extends Plant {
      */
     public WheatPlant(RandomQuality randomQuality) {
         super(randomQuality);
-        setSymbol('ἴ');
+        this.setSymbol('ἴ');
         this.setGrowthStage(1);
         this.setMaxGrowthStage(2);
         this.randomQuality = randomQuality;

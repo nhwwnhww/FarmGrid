@@ -7,9 +7,11 @@ import farm.inventory.product.data.RandomQuality;
 /**
  * Abstract class representing an animal on the farm, which is inherited from FarmItem.
  */
-public abstract class Animal extends FarmItem {
+public abstract class Animal implements FarmItem {
+    private final RandomQuality randomQuality;
     private boolean isFed;
     private boolean hasProduced;
+    private char symbol;
 
     /**
      * Constructor for FarmItem, initializing the random quality of the item.
@@ -17,7 +19,26 @@ public abstract class Animal extends FarmItem {
      * @param randomQuality - The RandomQuality object representing the quality of the farm item.
      */
     public Animal(RandomQuality randomQuality) {
-        super(randomQuality);
+        this.randomQuality = randomQuality;
+    }
+
+    @Override
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
+    }
+
+    @Override
+    public char getSymbol() {
+        return symbol;
+    }
+
+    /**
+     * Provides access to the randomQuality for subclasses.
+     *
+     * @return the RandomQuality instance.
+     */
+    protected RandomQuality getRandomQuality() {
+        return randomQuality;
     }
 
     /**
