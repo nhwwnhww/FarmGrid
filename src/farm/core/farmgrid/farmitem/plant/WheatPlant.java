@@ -11,8 +11,6 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class WheatPlant extends Plant {
 
-    private final RandomQuality randomQuality;
-
     /**
      * Constructor for WheatPlant, initializing the plant with default symbol and growth stages.
      */
@@ -21,7 +19,6 @@ public class WheatPlant extends Plant {
         this.setSymbol('ἴ');
         this.setGrowthStage(1);
         this.setMaxGrowthStage(2);
-        this.randomQuality = randomQuality;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class WheatPlant extends Plant {
     @Override
     public Product harvest() throws UnableToInteractException {
         if (this.getGrowthStage() >= this.getMaxGrowthStage()) {
-            Quality quality = randomQuality.getRandomQuality();
+            Quality quality = this.getRandomQuality().getRandomQuality();
             this.setGrowthStage(0);
             return new Bread(quality);
         } else {

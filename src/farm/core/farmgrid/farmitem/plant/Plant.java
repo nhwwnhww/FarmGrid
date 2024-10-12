@@ -22,6 +22,15 @@ public abstract class Plant implements FarmItem {
         this.randomQuality = randomQuality;
     }
 
+    /**
+     * Provides access to the randomQuality for subclasses.
+     *
+     * @return the RandomQuality instance.
+     */
+    protected RandomQuality getRandomQuality() {
+        return randomQuality;
+    }
+
     @Override
     public void setSymbol(char symbol) {
         this.symbol = symbol;

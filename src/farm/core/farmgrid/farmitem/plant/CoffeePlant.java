@@ -11,8 +11,6 @@ import farm.inventory.product.data.RandomQuality;
  */
 public class CoffeePlant extends Plant {
 
-    private final RandomQuality randomQuality;
-
     /**
      * Constructor for CoffeePlant, initializing the plant with default symbol and growth stages.
      */
@@ -21,7 +19,6 @@ public class CoffeePlant extends Plant {
         this.setSymbol(':');
         this.setGrowthStage(1);
         this.setMaxGrowthStage(4);
-        this.randomQuality = randomQuality;
     }
 
     @Override
@@ -38,7 +35,7 @@ public class CoffeePlant extends Plant {
     @Override
     public Product harvest() throws UnableToInteractException {
         if (this.getGrowthStage() >= this.getMaxGrowthStage()) {
-            Quality quality = randomQuality.getRandomQuality();
+            Quality quality = this.getRandomQuality().getRandomQuality();
             this.setGrowthStage(0);
             return new Coffee(quality);
         } else {
